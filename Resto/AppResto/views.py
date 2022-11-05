@@ -1,7 +1,8 @@
 from ast import Return
 from django.http import HttpResponse
-from django.shortcuts import render
-from .models import PlatoPrincipal
+from django.shortcuts import render,redirect
+from .models import PlatoPrincipal, Bebida, Postre
+from .forms import BebidaFormulario, PostreFormulario, PlatoPpalFormulario
 # Create your views here.
 
 
@@ -10,22 +11,84 @@ from .models import PlatoPrincipal
 def inicio(request):
     return render(request,"inicio.html")
 
-def platoPpal(request, combo, plato, guarnicion,precio):
-
-    platoPpal = PlatoPrincipal(combo = combo, plato = plato, guarnicion = guarnicion, precio=precio)
-    platoPpal.save()
-    
-    return HttpResponse(f"""
-         <p> Combo: {platoPpal.combo} - Plato: {platoPpal.plato} - Guarnicion: {platoPpal.guarnicion} - Precio: ${platoPpal.precio} agregado! </p>
-     """)
+def platoPpal(request):
 
 
-
+    return render(request,"platos.html")
 
 def bebida(request):
+    lista = Bebida.objects.all()
+    return render(request, "bebidas.html", {"lista_bebidas": lista})
     
-    return render(request,"bebidas.html")
 
 def postre(request):
-    return HttpResponse("Vista Postre")
+
     return render(request,"postres.html")
+
+def lista_bebida(request):
+    lista = Bebida.objects.all()
+    return render(request, "lista-bebidas.html", {"lista_bebidas": lista})
+
+# FORMULARIOS
+
+def bebidaFormulario(request):
+
+    print('method: ', request.method)
+    print('post: ', request.POST)
+
+
+    if request.method =='POST':
+        mi_formulario_de_bebida = BebidaFormulario(request.POST)
+        print (mi_formulario_de_bebida)
+        if mi_formulario_de_bebida.is_valid():
+            data = mi_formulario_de_bebida.cleaned_data
+            bebida = Bebida(codBebida=data['codBebida'], bebida=data['bebida'], precio=data['precio'])
+            bebida.save()
+
+        return redirect('bebidaFormulario')
+    else:
+        mi_formulario_de_bebida = BebidaFormulario()
+
+    return render(request, "bebidaFormulario.html", {'mi_formulario_de_bebida': mi_formulario_de_bebida})
+
+
+
+def postreFormulario(request):
+
+    print('method: ', request.method)
+    print('post: ', request.POST)
+
+
+    if request.method =='POST':
+        mi_formulario_de_postre = PostreFormulario(request.POST)
+        print (mi_formulario_de_postre)
+        if mi_formulario_de_postre.is_valid():
+            data = mi_formulario_de_postre.cleaned_data
+            postre = Postre(codPostre=data['codPostre'], postre=data['postre'], precio=data['precio'])
+            postre.save()
+
+        return redirect('postreFormulario')
+    else:
+        mi_formulario_de_postre = PostreFormulario()
+
+    return render(request, "postreFormulario.html", {'mi_formulario_de_postre': mi_formulario_de_postre})
+
+def platoPpalFormulario(request):
+
+    print('method: ', request.method)
+    print('post: ', request.POST)
+
+
+    if request.method =='POST':
+        mi_formulario_de_platoPpal = PlatoPpalFormulario(request.POST)
+        print (mi_formulario_de_platoPpal)
+        if mi_formulario_de_platoPpal.is_valid():
+            data = mi_formulario_de_platoPpal.cleaned_data
+            platoPpal = PlatoPrincipal(combo=data['combo'], plato=data['plato'], guarnicion=data['guarnicion'], precio=data['precio'])
+            platoPpal.save()
+
+        return redirect('platoPpalFormulario')
+    else:
+        mi_formulario_de_platoPpal = PlatoPpalFormulario()
+
+    return render(request, "platoPpalFormulario.html", {'mi_formulario_de_platoPpal': mi_formulario_de_platoPpal})   

@@ -1,12 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>POSTRES</h1>
-</body>
-</html>
+{% extends 'padre.html' %}
+{% load static %}
+
+{% block contenidoDinamico %}
+
+<h1>Postres</h1>
+<p>Lista de Postres</p>
+<ul>
+    <li>Postre 1</li>
+    <li>Postre 2</li>
+    <li>Postre 3</li>
+    <li>Postre 4</li>
+
+    
+</ul>
+
+<a href="{% url 'postreFormulario' %}">Agregar Postre</a>
+            
+{% endblock contenidoDinamico %}

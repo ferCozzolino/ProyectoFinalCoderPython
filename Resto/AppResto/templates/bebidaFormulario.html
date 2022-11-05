@@ -1,0 +1,13 @@
+{% extends 'padre.html' %}
+{% load static %}
+
+{% block contenidoDinamico %}
+
+<form action="{% url 'bebidaFormulario' %}" method="POST">{% csrf_token %}
+
+    {{mi_formulario_de_bebida.as_p}}
+
+    <input type="submit" value="Agregar "/>
+</form>
+            
+{% endblock contenidoDinamico %}

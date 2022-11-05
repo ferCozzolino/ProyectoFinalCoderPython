@@ -1,0 +1,13 @@
+{% extends 'padre.html' %}
+{% load static %}
+
+{% block contenidoDinamico %}
+
+<form action="{% url 'platoPpalFormulario' %}" method="POST">{% csrf_token %}
+
+    {{mi_formulario_de_platoPpal.as_p}}
+
+    <input type="submit" value="Agregar "/>
+</form>
+            
+{% endblock contenidoDinamico %}
