@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from .views import platoPpal, bebida, postre,inicio, bebidaFormulario,postreFormulario,platoPpalFormulario
+from .views import platoPpal, bebida, postre,inicio, bebidaFormulario,postreFormulario,platoPpalFormulario,busquedaBebida,buscarBebidas
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -12,4 +12,6 @@ urlpatterns = [
     path('bebidaFormulario/', bebidaFormulario, name='bebidaFormulario'),
     path('postreFormulario/', postreFormulario, name='postreFormulario'),
     path('platoPpalFormulario/', platoPpalFormulario, name='platoPpalFormulario'),
+    path('busquedaBebida/', busquedaBebida, name='busquedaBebida'),
+    path('buscarbebida/', buscarBebidas, name='buscarbebida'),
 ]

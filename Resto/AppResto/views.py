@@ -92,3 +92,14 @@ def platoPpalFormulario(request):
         mi_formulario_de_platoPpal = PlatoPpalFormulario()
 
     return render(request, "platoPpalFormulario.html", {'mi_formulario_de_platoPpal': mi_formulario_de_platoPpal})   
+
+# Busquedas
+
+def busquedaBebida(request):
+    return render(request, 'busquedaBebidas.html')
+
+def buscarBebidas(request):
+    bebida_buscada = request.GET['bebida']
+    precio = Bebida .objects.get(bebida = bebida_buscada)
+
+    return render(request, 'resultadoBusquedaBebida.html', {'precio:': precio, 'bebida': bebida_buscada})
