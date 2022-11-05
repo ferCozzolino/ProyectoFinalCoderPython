@@ -27,7 +27,7 @@ def postre(request):
 
 def lista_bebida(request):
     lista = Bebida.objects.all()
-    return render(request, "lista-bebidas.html", {"lista_bebidas": lista})
+    return render(request, "bebidas.html", {"lista_bebidas": lista})
 
 # FORMULARIOS
 
@@ -95,11 +95,22 @@ def platoPpalFormulario(request):
 
 # Busquedas
 
-def busquedaBebida(request):
-    return render(request, 'busquedaBebidas.html')
+def busqueda_bebida(request):
+    return render(request, 'busqueda_bebida.html')
 
-def buscarBebidas(request):
+def buscar_bebida(request):
     bebida_buscada = request.GET['bebida']
-    precio = Bebida .objects.get(bebida = bebida_buscada)
+    precioBebida = Bebida.objects.get(bebida = bebida_buscada)
+    
+    
 
-    return render(request, 'resultadoBusquedaBebida.html', {'precio:': precio, 'bebida': bebida_buscada})
+    return render(request, 'resultadoBusquedaBebida.html', {'precioBebida:': precioBebida, 'bebida': bebida_buscada})
+
+def busqueda_postre(request):
+    return render(request, "busqueda_postre.html")
+
+def buscar_postre(request):
+    postre_buscado = request.GET['postre']
+    precioPostre = Postre.objects.get(postre = postre_buscado)
+
+    return render(request, 'resultadoBusquedaPostre.html', {'precio': precioPostre, 'postre':postre_buscado})

@@ -3,7 +3,7 @@
 
 {% block contenidoDinamico %}
 
-<form action="{% url 'buscarbebida' %}" method="GET">{% csrf_token %}
+<form action="{% url 'buscar_bebida' %}" method="GET">{% csrf_token %}
 
     <p>Ingrese una bebida: <input type="text" name="bebida"></p>
     <input type="submit" value="Buscar "/>
