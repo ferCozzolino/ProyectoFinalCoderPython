@@ -1,0 +1,33 @@
+{% extends 'padre.html' %}
+{% load static %}
+
+{% block contenidoDinamico %}
+
+<h1> Lista de Bebidas ( CLASS ) </h1>
+<ul>
+    
+    {% for bebida in bebidas %}
+        <li> 
+            <a href="{% url 'DetalleBebida' bebida.id %}">
+                {{bebida}}
+            </a>
+        </li>
+
+        <div>
+            
+            <button>
+                <a href="{% url 'ActualizaBebida' bebida.id %}">Editar</a>
+            </button>
+
+            <button>
+                <a href="{% url 'EliminaBebida' bebida.id  %}">Eliminar</a>
+            </button>
+
+        </div>
+
+    {% endfor %}
+        
+</ul>
+
+
+{% endblock contenidoDinamico %} 

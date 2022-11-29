@@ -2,23 +2,11 @@
 {% load static %}
 
 {% block contenidoDinamico %}
+<h4>Nuestras bebidas:</h4>
 
-<h1>Bebidas</h1>
-<h4>Lista de Bebidas!</h4>
-
-<ul>
-
-    {% for bebida in lista_bebida %}
-       <li>{{bebida.bebida}} - {{bebida.precio}}</li> 
-    {% endfor %}
-        
-</ul>
+{% for bebida in lista_bebida %}
+    <li>{{bebida.bebida}} - ${{bebida.precio}}</li>
+{% endfor %}
 
 <a href="{% url 'bebidaFormulario' %}">Agregar Bebida</a>
-<br>
-<a href="{% url 'busqueda_bebida' %}">Buscar Bebida</a>
-
-
-
-            
 {% endblock contenidoDinamico %}

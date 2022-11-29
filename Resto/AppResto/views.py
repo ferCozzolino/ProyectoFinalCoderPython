@@ -1,116 +1,322 @@
-from ast import Return
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.shortcuts import render,redirect
-from .models import PlatoPrincipal, Bebida, Postre
-from .forms import BebidaFormulario, PostreFormulario, PlatoPpalFormulario
-# Create your views here.
+from django.views.generic import ListView
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import DeleteView, UpdateView, CreateView
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.decorators import login_required   
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+from .models import Curso, Bebida, Postre, Plato
+from .forms import BebidaFormulario, UserEditForm
 
 
 # Create your views here.
+#----------------------------------------------------------------------------------------------------------
 
 def inicio(request):
-    return render(request,"inicio.html")
-
-def platoPpal(request):
-
-
-    return render(request,"platos.html")
-
-def bebida(request):
-    lista = Bebida.objects.all()
-    return render(request, "bebidas.html", {"lista_bebidas": lista})
     
+    return render(request, "inicio.html")
 
-def postre(request):
+def curso(request, camada, nombre):
 
-    return render(request,"postres.html")
+    curso = Curso(nombre=nombre, camada=camada)
+    curso.save()
+
+    return HttpResponse(f"""
+        <p>Curso: {curso.nombre} - Camada: {curso.camada} agregado! </p>
+    """)
+
+def bebida(request, bebida, precio):
+
+    bebida = Bebida(bebida=bebida, precio=precio)
+    bebida.save()
+
+    return HttpResponse(f"""
+        <p>Bebida: {bebida.bebida} - Precio: {bebida.precio} agregado! </p>
+    """)
+
+
+def postre(request, postre, precio):
+
+    postre = Postre(postre=postre, precio=precio)
+    postre.save()
+
+    return HttpResponse(f"""
+        <p>Postre: {postre.postre} - Precio: {postre.precio} agregado! </p>
+    """)
+
+def plato(request, plato, guarnicion, precio):
+
+    plato = Plato(plato=plato, guarnicion=guarnicion, precio=precio)
+    plato.save()
+
+    return HttpResponse(f"""
+        <p>Plato: {plato.plato} - Guarnicion: {plato.guarnicion} - Precio: {plato.precio} agregado! </p>
+    """)
+
+
+# Secciones
+#----------------------------------------------------------------------------------------------------------
+
+
+def bebidas(request):
+
+    lista = Bebida.objects.all()
+    return render(request, "bebidas.html", {"lista_bebida": lista})
+
+def platos(request):
+    
+    #return render(request, "platos.html")
+    lista = Plato.objects.all()
+    return render(request, "platos.html", {"lista_plato": lista})
+@login_required
+def postres(request):
+    lista = Postre.objects.all()
+    return render(request, "postres.html", {"lista_postre": lista})
+    #return render(request, "postres.html")
+
+# Listados
+#----------------------------------------------------------------------------------------------------------
+def lista_curso(request):
+
+    lista = Curso.objects.all()
+
+    return render(request, "lista_cursos.html", {"lista_cursos": lista})
 
 def lista_bebida(request):
-    lista = Bebida.objects.all()
-    return render(request, "bebidas.html", {"lista_bebidas": lista})
 
-# FORMULARIOS
+    lista = Bebida.objects.all()
+
+    return render(request, "lista_bebida.html", {"lista_bebida": lista})
+
+def lista_postre(request):
+
+    lista = Postre.objects.all()
+
+    return render(request, "lista_postre.html", {"lista_postre": lista})
+
+def lista_plato(request):
+
+    lista = Plato.objects.all()
+
+    return render(request, "lista_plato.html", {"lista_plato": lista})
+
+
+
+# Formularios
+#----------------------------------------------------------------------------------------------------------
 
 def bebidaFormulario(request):
 
     print('method: ', request.method)
     print('post: ', request.POST)
 
-
-    if request.method =='POST':
+    if request.method == 'POST':
+        
         mi_formulario_de_bebida = BebidaFormulario(request.POST)
-        print (mi_formulario_de_bebida)
-        if mi_formulario_de_bebida.is_valid():
+        print(mi_formulario_de_bebida)
+        if  mi_formulario_de_bebida.is_valid():
             data = mi_formulario_de_bebida.cleaned_data
-            bebida = Bebida(codBebida=data['codBebida'], bebida=data['bebida'], precio=data['precio'])
+            bebida = Bebida(bebida=data['bebida'], precio=data['precio'])
             bebida.save()
-
-        return redirect('bebidaFormulario')
+            return redirect ('Bebidas')
     else:
-        mi_formulario_de_bebida = BebidaFormulario()
+            mi_formulario_de_bebida = BebidaFormulario()   
+        
+    return render(request, "bebidaFormulario.html", {'pepe': mi_formulario_de_bebida})
 
-    return render(request, "bebidaFormulario.html", {'mi_formulario_de_bebida': mi_formulario_de_bebida})
-
-
-
-def postreFormulario(request):
-
-    print('method: ', request.method)
-    print('post: ', request.POST)
-
-
-    if request.method =='POST':
-        mi_formulario_de_postre = PostreFormulario(request.POST)
-        print (mi_formulario_de_postre)
-        if mi_formulario_de_postre.is_valid():
-            data = mi_formulario_de_postre.cleaned_data
-            postre = Postre(codPostre=data['codPostre'], postre=data['postre'], precio=data['precio'])
-            postre.save()
-
-        return redirect('postreFormulario')
-    else:
-        mi_formulario_de_postre = PostreFormulario()
-
-    return render(request, "postreFormulario.html", {'mi_formulario_de_postre': mi_formulario_de_postre})
-
-def platoPpalFormulario(request):
-
-    print('method: ', request.method)
-    print('post: ', request.POST)
-
-
-    if request.method =='POST':
-        mi_formulario_de_platoPpal = PlatoPpalFormulario(request.POST)
-        print (mi_formulario_de_platoPpal)
-        if mi_formulario_de_platoPpal.is_valid():
-            data = mi_formulario_de_platoPpal.cleaned_data
-            platoPpal = PlatoPrincipal(combo=data['combo'], plato=data['plato'], guarnicion=data['guarnicion'], precio=data['precio'])
-            platoPpal.save()
-
-        return redirect('platoPpalFormulario')
-    else:
-        mi_formulario_de_platoPpal = PlatoPpalFormulario()
-
-    return render(request, "platoPpalFormulario.html", {'mi_formulario_de_platoPpal': mi_formulario_de_platoPpal})   
 
 # Busquedas
+
 
 def busqueda_bebida(request):
     return render(request, 'busqueda_bebida.html')
 
 def buscar_bebida(request):
-    bebida_buscada = request.GET['bebida']
-    precioBebida = Bebida.objects.get(bebida = bebida_buscada)
+    if request.GET["bebida"]:
+
+        bebida_buscada = request.GET['bebida']
+        bebidas = Bebida.objects.get(bebida = bebida_buscada) 
+
+    return render(request, 'resultadoBusquedaBebida.html', {'bebidas': bebidas, 'bebida': bebida_buscada    })
+
+def busqueda_camada(request):
+    return render(request, 'busqueda_camada.html')
+
+def buscar(request):
+    camada_buscada = request.GET['camada']
+    curso = Curso.objects.get(camada = camada_buscada)
+
+    return render(request, 'resultadoBusqueda.html',{'curso': curso, 'camada': camada_buscada})
+
+
+# CRUD
+#-----------------------------------------------------------------------------------------------------
+
+# CREATE
+
+def crea_bebida(request):
+
+    print('method: ', request.method)
+    print('post: ', request.POST)
+
+    if request.method == 'POST':
+        
+        mi_formulario_de_bebida = BebidaFormulario(request.POST)
+        print(mi_formulario_de_bebida)
+        if  mi_formulario_de_bebida.is_valid():
+            data = mi_formulario_de_bebida.cleaned_data
+            bebida = Bebida(bebida=data['bebida'], precio=data['precio'])
+            bebida.save()
+            return redirect ('Bebidas')
+    else:
+            mi_formulario_de_bebida = BebidaFormulario()           
+            return render(request, "bebidaFormulario.html", {'pepe': mi_formulario_de_bebida})
+
+
+# READ
+
+def leerBebidas(request):
+    bebidas = Bebida.objects.all()
+    return render(request, "leerBebidas.html", {"bebidas": bebidas})
+
+
+# UPDATE
+
+def editar_bebida(request, id):
+
+    print('method: ', request.method)
+    print('post: ', request.POST)
+
+    bebida = Bebida.objects.get(id=id)
+    if request.method == 'POST':
+        
+        mi_formulario_de_bebida = BebidaFormulario(request.POST)
+        print(mi_formulario_de_bebida)
+        if  mi_formulario_de_bebida.is_valid():
+            data = mi_formulario_de_bebida.cleaned_data
+            bebida.bebida = data["bebida"]
+            bebida.precio = data["precio"]
+            bebida.save()
+            return redirect ('Bebidas')
+    else:
+            mi_formulario_de_bebida = BebidaFormulario(initial={
+                "bebida": bebida.bebida,
+                "precio": bebida.precio
+            })           
+            return render(request, "editar_bebida.html", {'pepe': mi_formulario_de_bebida, "id": bebida.id})
     
+# DELETE
+
+def eliminar_bebida(request, id):
+
+    if request.method == 'POST':
+        bebida = Bebida.objects.get(id=id)
+        bebida.delete()
+        bebidas = Bebida.objects.all()
+        return render(request, "leerBebidas.html", {"bebidas": bebidas})
+
+
+# Login
+
+def loginView(request):
+
+    print('method: ', request.method)
+    print('post: ', request.POST)
+
+    if request.method == 'POST':
+        
+        mi_formulario = AuthenticationForm(request, data=request.POST)
+        print(mi_formulario)
+        if  mi_formulario.is_valid():
+            data = mi_formulario.cleaned_data
+
+            usuario = data["username"]
+            psw = data["password"]
+
+            user = authenticate(username=usuario, password=psw)
+            
+            if user:
+                login(request, user)
+                return render(request, "inicio.html", {'mensaje': f'Bienvenido {usuario} !'})
+            else:
+                return render(request, "inicio.html", {'mensaje': f'Error, datos incorrectos'})
+
+        return render(request, "inicio.html", {'mensaje': f'Error, formulario invalido'})
+    else:
+            mi_formulario = AuthenticationForm()         
+            return render(request, "login.html", {'pepe': mi_formulario})
+
+
+def register(request):
     
+    print('method: ', request.method)
+    print('post: ', request.POST)
 
-    return render(request, 'resultadoBusquedaBebida.html', {'precioBebida:': precioBebida, 'bebida': bebida_buscada})
+    if request.method == 'POST':
+        
+        mi_formulario = UserCreationForm(request.POST)
+        
+        if  mi_formulario.is_valid():
+            username = mi_formulario.cleaned_data["username"]
+            mi_formulario.save()
 
-def busqueda_postre(request):
-    return render(request, "busqueda_postre.html")
+            return render(request, "inicio.html", {'mensaje': f'Usuario: {username} creado correctamente!'})
+        else:
+            return render(request, "inicio.html", {'mensaje': f'Error al crear el usuario'})
 
-def buscar_postre(request):
-    postre_buscado = request.GET['postre']
-    precioPostre = Postre.objects.get(postre = postre_buscado)
+    else:
+            mi_formulario = UserCreationForm()           
+            return render(request, "registro.html", {'pepe': mi_formulario})
 
-    return render(request, 'resultadoBusquedaPostre.html', {'precio': precioPostre, 'postre':postre_buscado})
+# Perfil de usuario
+
+def editar_perfil(request):
+
+    usuario = request.user
+
+    if request.method == 'POST':
+        
+        mi_formulario = UserEditForm(request.POST)
+ 
+        if  mi_formulario.is_valid():
+            data = mi_formulario.cleaned_data
+            usuario.first_name = data["first_name"]
+            usuario.last_name = data["last_name"]
+            usuario.email = data["email"]
+            usuario.save()
+            return render(request, "inicio.html", {'mensaje': f'Datos Actualizados'})
+    else:
+            mi_formulario = UserEditForm(instance= request.user)           
+            return render(request, "editar_perfil.html", {'pepe': mi_formulario})
+
+# Clases
+
+class BebidaList(LoginRequiredMixin, ListView):
+    model = Bebida
+    template_name = 'bebidas_list.html'
+    context_object_name = "bebidas"
+
+class BebidaDetail(DetailView):
+     model = Bebida
+     template_name ='bebidas_detail.html'
+     context_object_name = "bebida"
+
+class BebidaCreate(CreateView):
+     model = Bebida
+     template_name = 'bebidas_create.html'
+     fields = ["bebida", "precio"]
+     success_url = '/bebidas_list'
+
+class BebidaUpdate(UpdateView):
+     model = Bebida
+     template_name = 'bebidas_update.html'
+     fields = ('__all__')
+     success_url = '/bebidas_list'
+
+class BebidaDelete(DeleteView):
+     model = Bebida
+     template_name = 'bebidas_delete.html'
+     success_url = '/bebidas_list'

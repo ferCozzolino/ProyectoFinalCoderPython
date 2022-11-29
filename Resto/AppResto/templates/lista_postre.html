@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Postres</title>
+</head>
+<body>
+     <ul>
+        <h1>El listado de Postres es:</h1>
+
+        {% for postre in lista_postre %}
+            <li>{{postre.postre}} - ${{postre.precio}}</li>
+        {% endfor %}
+            
+     </ul>
+</body>
+</html>

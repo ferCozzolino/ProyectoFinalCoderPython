@@ -2,18 +2,10 @@
 {% load static %}
 
 {% block contenidoDinamico %}
-
-<h1>Platos Principales / Combos</h1>
-<p>Lista de Combos</p>
-<ul>
-    <li>Combo 1</li>
-    <li>Combo 2</li>
-    <li>Combo 3</li>
-    <li>Combo 4</li>
-
     
-</ul>
-
-<a href="{% url 'platoPpalFormulario' %}">Agregar Postre</a>
-            
+    <h4>Nuestros platos:</h4>
+    {% for plato in lista_plato %}
+    <li>{{plato.plato}} - {{plato.guarnicion}} -  ${{plato.precio}}</li>
+    {% endfor %}
+    
 {% endblock contenidoDinamico %}

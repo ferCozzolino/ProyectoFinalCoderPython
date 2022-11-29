@@ -2,12 +2,12 @@
 {% load static %}
 
 {% block contenidoDinamico %}
-<h4>Agregar Bebida:</h4>
+<h4>Editar Bebida:</h4>
 <br>
-<form action="{% url 'Crea_bebida' %}" method="POST"> {% csrf_token %}
+<form action="{% url 'Editar_bebida' id %}" method="POST"> {% csrf_token %}
 
     {{ pepe.as_p }}
-    <input type="submit" value="Crear">
+    <input type="submit" value="ACTUALIZAR">
 
 </form>
 

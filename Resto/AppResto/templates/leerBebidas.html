@@ -1,0 +1,25 @@
+{% extends 'padre.html' %}
+{% load static %}
+
+{% block contenidoDinamico %}
+
+<h1> Lista de Bebidas</h1>
+<ul>
+    
+    {% for bebida in bebidas %}
+        <li> {{bebida}}</li>
+        <div>
+            <form action="{% url 'Elimina_bebida' bebida.id %}" method="POST"> {% csrf_token %}
+                <button type = "submit">ELIMINAR</button>
+           
+            </form> 
+            <button>
+                <a href="{% url 'Editar_bebida' bebida.id %}">EDITAR</a>
+            </button>
+        </div>
+    {% endfor %}
+        
+</ul>
+
+
+{% endblock contenidoDinamico %} 

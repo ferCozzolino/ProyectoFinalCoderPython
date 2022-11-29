@@ -1,17 +1,12 @@
 from django import forms
+from django.contrib.auth.forms import UserChangeForm
+from django.contrib.auth.models import User
 
 class BebidaFormulario(forms.Form):
-    codBebida = forms.IntegerField()
     bebida = forms.CharField()
     precio = forms.IntegerField()
 
-class PostreFormulario(forms.Form):
-    codPostre = forms.IntegerField()
-    postre = forms.CharField()
-    precio = forms.IntegerField()
-
-class PlatoPpalFormulario(forms.Form):
-    combo = forms.IntegerField()
-    plato = forms.CharField()
-    guarnicion = forms.CharField()
-    precio = forms.IntegerField()
+class UserEditForm(UserChangeForm):
+    class meta:
+        model = User
+        fields = ['email', 'first_name', 'last name']

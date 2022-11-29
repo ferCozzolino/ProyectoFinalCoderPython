@@ -2,18 +2,8 @@
 {% load static %}
 
 {% block contenidoDinamico %}
-
-<h1>Postres</h1>
-<p>Lista de Postres</p>
-<ul>
-    <li>Postre 1</li>
-    <li>Postre 2</li>
-    <li>Postre 3</li>
-    <li>Postre 4</li>
-
-    
-</ul>
-
-<a href="{% url 'postreFormulario' %}">Agregar Postre</a>
-            
+    <h4>Nuestras postres:</h4>
+    {% for postre in lista_postre %}
+        <li>{{postre.postre}} - ${{postre.precio}}</li>
+    {% endfor %}
 {% endblock contenidoDinamico %}

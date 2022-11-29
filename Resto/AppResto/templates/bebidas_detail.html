@@ -2,11 +2,11 @@
 {% load static %}
 
 {% block contenidoDinamico %}
-<h4>Resultado de la busqueda:</h4>
 
+<h1> Detalle de la bebida seleccionada: </h1>
 <hr>
-<p> La bebida: {{ bebidas }}</p>
-<h4> {{bebidas.precio}} </h4>
+<h3>Bebida: {{bebida.bebida}} |  Precio: ${{bebida.precio}}</h3>
 <hr>
+
 
 {% endblock contenidoDinamico %} 

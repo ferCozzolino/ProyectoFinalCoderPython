@@ -2,12 +2,18 @@
 {% load static %}
 
 {% block contenidoDinamico %}
+<h4>Buscar Bebida:</h4>
 
-<form action="{% url 'buscar_bebida' %}" method="GET">{% csrf_token %}
+<hr>
+<form action="{% url 'buscar_bebida' %}" method="GET"> {% csrf_token %}
 
-    <p>Ingrese una bebida: <input type="text" name="bebida"></p>
-    <input type="submit" value="Buscar "/>
+   <label for="">Ingrese la bebida a buscar</label>
+   <input type="text" name="bebida">
+
+   <input type="submit" value="Buscar">
 
 </form>
-            
-{% endblock contenidoDinamico %}
+<hr>
+
+
+{% endblock contenidoDinamico %} 
