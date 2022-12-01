@@ -2,15 +2,15 @@
 {% load static %}
 
 {% block contenidoDinamico %}
-<h4>Actualizar Bebida:</h4>
-<hr>
+<h4>Actualizar Plato:</h4>
+<br>
 <form  method="POST"> {% csrf_token %}
 
     {{ form.as_p }}
     <input type="submit" value="Modificar">
 
 </form>
-<hr>
+
 
 
 {% endblock contenidoDinamico %} 

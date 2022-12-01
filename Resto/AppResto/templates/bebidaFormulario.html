@@ -3,14 +3,16 @@
 
 {% block contenidoDinamico %}
 <h4>Agregar Bebida:</h4>
-<br>
+<hr>
 <form action="{% url 'Crea_bebida' %}" method="POST"> {% csrf_token %}
 
     {{ pepe.as_p }}
     <input type="submit" value="Crear">
+    <hr>
+
 
 </form>
 
-
+<a href="{% url 'Bebidas' %}">< -- Volver</a>
 
 {% endblock contenidoDinamico %} 

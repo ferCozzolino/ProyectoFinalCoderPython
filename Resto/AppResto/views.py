@@ -3,13 +3,13 @@ from django.http import HttpResponse
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import DeleteView, UpdateView, CreateView
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import *
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required   
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .models import Curso, Bebida, Postre, Plato
-from .forms import BebidaFormulario, UserEditForm
+from .models import *
+from .forms import *  
 
 
 # Create your views here.
@@ -17,7 +17,9 @@ from .forms import BebidaFormulario, UserEditForm
 
 def inicio(request):
     
+    #avatar = Avatar.objects.get(user=request.user)
     return render(request, "inicio.html")
+    #return render(request, "inicio.html", {"url": avatar.imagen.url})
 
 def curso(request, camada, nombre):
 
@@ -71,8 +73,10 @@ def platos(request):
     #return render(request, "platos.html")
     lista = Plato.objects.all()
     return render(request, "platos.html", {"lista_plato": lista})
+
 @login_required
 def postres(request):
+
     lista = Postre.objects.all()
     return render(request, "postres.html", {"lista_postre": lista})
     #return render(request, "postres.html")
@@ -140,7 +144,7 @@ def buscar_bebida(request):
         bebida_buscada = request.GET['bebida']
         bebidas = Bebida.objects.get(bebida = bebida_buscada) 
 
-    return render(request, 'resultadoBusquedaBebida.html', {'bebidas': bebidas, 'bebida': bebida_buscada    })
+    return render(request, 'resultadoBusquedaBebida.html', {'bebidas': bebidas, 'bebida': bebida_buscada })
 
 def busqueda_camada(request):
     return render(request, 'busqueda_camada.html')
@@ -257,7 +261,7 @@ def register(request):
 
     if request.method == 'POST':
         
-        mi_formulario = UserCreationForm(request.POST)
+        mi_formulario = UserEditForm(request.POST)
         
         if  mi_formulario.is_valid():
             username = mi_formulario.cleaned_data["username"]
@@ -279,21 +283,28 @@ def editar_perfil(request):
 
     if request.method == 'POST':
         
-        mi_formulario = UserEditForm(request.POST)
+        mi_formulario = UserRegisterForm(request.POST)
  
         if  mi_formulario.is_valid():
             data = mi_formulario.cleaned_data
+            
             usuario.first_name = data["first_name"]
             usuario.last_name = data["last_name"]
-            usuario.email = data["email"]
+            usuario.email = data["email"] 
+            usuario.set_password(data["password1"])
             usuario.save()
+
             return render(request, "inicio.html", {'mensaje': f'Datos Actualizados'})
+
+        return render(request, "editar_perfil.html", {'mensaje': f'Las Contraseñas no son iguales'})
+
     else:
-            mi_formulario = UserEditForm(instance= request.user)           
-            return render(request, "editar_perfil.html", {'pepe': mi_formulario})
+            mi_formulario = UserRegisterForm(instance=request.user)           
+    return render(request, "editar_perfil.html", {'pepe': mi_formulario})
 
 # Clases
 
+#Bebidas
 class BebidaList(LoginRequiredMixin, ListView):
     model = Bebida
     template_name = 'bebidas_list.html'
@@ -320,3 +331,62 @@ class BebidaDelete(DeleteView):
      model = Bebida
      template_name = 'bebidas_delete.html'
      success_url = '/bebidas_list'
+
+
+#Platos
+class PlatoList(LoginRequiredMixin, ListView):
+    model = Plato
+    template_name = 'platos_list.html'
+    context_object_name = "platos"
+
+class PlatoDetail(DetailView):
+     model = Plato
+     template_name ='platos_detail.html'
+     context_object_name = "platos"
+
+class PlatoCreate(CreateView):
+     model = Plato
+     template_name = 'platos_create.html'
+     fields = ["plato", "precio"]
+     success_url = '/platos_list'
+
+class PlatoUpdate(UpdateView):
+     model = Plato
+     template_name = 'platos_update.html'
+     fields = ('__all__')
+     success_url = '/platos_list'
+
+class PlatoDelete(DeleteView):
+     model = Plato
+     template_name = 'platos_delete.html'
+     success_url = '/platos_list'
+
+
+#Postre
+
+class PostreList(LoginRequiredMixin, ListView):
+    model = Postre
+    template_name = 'postres_list.html'
+    context_object_name = "postres"
+
+class PostreDetail(DetailView):
+     model = Postre
+     template_name ='postre_detail.html'
+     context_object_name = "postre"
+
+class PostreCreate(CreateView):
+     model = Postre
+     template_name = 'postre_create.html'
+     fields = ["postre", "precio"]
+     success_url = '/postres_list'
+
+class PostreUpdate(UpdateView):
+     model = Postre
+     template_name = 'platos_update.html'
+     fields = ('__all__')
+     success_url = '/postres_list'
+
+class PostreDelete(DeleteView):
+     model = Postre
+     template_name = 'postre_delete.html'
+     success_url = '/postres_list'

@@ -4,6 +4,7 @@
 {% block contenidoDinamico %}
 
 <h1> Lista de Bebidas ( CLASS ) </h1>
+
 <ul>
     
     {% for bebida in bebidas %}
@@ -29,5 +30,6 @@
         
 </ul>
 
+<a href="{% url 'Bebidas' %}">< -- Volver</a>
 
 {% endblock contenidoDinamico %} 

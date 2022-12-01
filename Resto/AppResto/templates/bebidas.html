@@ -7,6 +7,9 @@
 {% for bebida in lista_bebida %}
     <li>{{bebida.bebida}} - ${{bebida.precio}}</li>
 {% endfor %}
-
+<hr>
 <a href="{% url 'bebidaFormulario' %}">Agregar Bebida</a>
+
+<a href="{% url 'Bebidas_list' %}">Modificar Bebida</a>
+<hr>
 {% endblock contenidoDinamico %}

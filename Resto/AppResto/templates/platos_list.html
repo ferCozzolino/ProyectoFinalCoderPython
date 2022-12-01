@@ -1,0 +1,35 @@
+{% extends 'padre.html' %}
+{% load static %}
+
+{% block contenidoDinamico %}
+
+<h1> Lista de Platos </h1>
+
+<ul>
+    
+    {% for plato in platos %}
+        <li> 
+            <a href="{% url 'DetallePlato' plato.id %}">
+                {{plato}}
+            </a>
+        </li>
+
+        <div>
+            
+            <button>
+                <a href="{% url 'ActualizaPlato' plato.id %}">Editar</a>
+            </button>
+
+            <button>
+                <a href="{% url 'EliminaPlato' plato.id  %}">Eliminar</a>
+            </button>
+
+        </div>
+
+    {% endfor %}
+        
+</ul>
+
+<a href="{% url 'Platos' %}">< -- Volver</a>
+
+{% endblock contenidoDinamico %} 

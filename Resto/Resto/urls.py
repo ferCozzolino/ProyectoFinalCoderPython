@@ -16,7 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.contrib.auth.views import LogoutView
 from django.urls import path
-from AppResto.views import *  
+from AppResto.views import * 
+from django.conf.urls.static import static 
+from django.conf import settings
 
 
 #from AppResto.views import inicio, curso, bebida, postre, plato, lista_curso, lista_bebida, lista_postre, lista_plato,bebidas, platos, postres, bebidaFormulario, busqueda_bebida,buscar
@@ -46,6 +48,8 @@ urlpatterns = [
 
     #Formularios
     path('bebidaFormulario/', bebidaFormulario, name='bebidaFormulario'),
+    path('platoFormulario/', platoFormulario, name='platoFormulario'),
+    path('postreFormulario/', postreFormulario, name='postreFormulario'),
 
     #Busquedas
     path('busqueda_bebida/', busqueda_bebida, name='busqueda_bebida'),
@@ -63,11 +67,27 @@ urlpatterns = [
     path('editar_bebida/<int:id>', editar_bebida, name='Editar_bebida'),
 
     #CLASS
+
+    #BEBIDAS
     path('bebidas_list', BebidaList.as_view(), name='Bebidas_list'),
     path('detalleBebida/<pk>', BebidaDetail.as_view(), name='DetalleBebida'),
     path('creaBebida/', BebidaCreate.as_view(), name='CreaBebida'),
     path('actualizarBebida/<pk>', BebidaUpdate.as_view(), name='ActualizaBebida'),
     path('eliminarBebida/<pk>', BebidaDelete.as_view(), name='EliminaBebida'),
+
+    #Platos
+    path('platos_list', PlatoList.as_view(), name='Plato_list'),
+    path('detallePlato/<pk>', PlatoDetail.as_view(), name='DetallePlato'),
+    path('creaPlato/', PlatoCreate.as_view(), name='CreaPlato'),
+    path('actualizarPlato/<pk>', PlatoUpdate.as_view(), name='ActualizaPlato'),
+    path('eliminarPlato/<pk>', PlatoDelete.as_view(), name='EliminaPlato'),
+
+    #Postre
+    path('postres_list', PostreList.as_view(), name='Postre_list'),
+    path('detallePostre/<pk>', PostreDetail.as_view(), name='DetallePostre'),
+    path('creaPostre/', PostreCreate.as_view(), name='CreaPostre'),
+    path('actualizarPostre/<pk>', PostreUpdate.as_view(), name='ActualizaPostre'),
+    path('eliminarPostre/<pk>', PostreDelete.as_view(), name='EliminaPostre'),
     
     #LOGIN/LOGOUT
     path('login/', loginView, name='Login'),
@@ -75,6 +95,11 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(template_name="logout.html"), name='Logout'),
 
 
+
+
+
     #Perfil de Usuario
-    path('  /', editar_perfil, name='Editar Perfil'),   
+    path('editar-perfil/', editar_perfil, name='EditarPerfil'),   
 ]
+
+urlpatterns+=static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

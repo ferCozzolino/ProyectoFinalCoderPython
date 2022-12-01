@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block contenidoDinamico %}
-<h1>Bienvenido a la APP de Resto</h1>
+<h1>Bienvenido {{user.username}} a la APP de Resto</h1>
 <h3>{{mensaje}}</h3>
+<img height="50px" src="{{url}}" alt="avatar">
 {% endblock contenidoDinamico %}

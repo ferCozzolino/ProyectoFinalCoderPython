@@ -2,8 +2,15 @@
 {% load static %}
 
 {% block contenidoDinamico %}
-    <h4>Nuestras postres:</h4>
+    
+    <h4>Nuestros postres:</h4>
     {% for postre in lista_postre %}
-        <li>{{postre.postre}} - ${{postre.precio}}</li>
+    <li>{{postre.postre}} - {{postre.precio}}</li>
     {% endfor %}
+    <hr>
+
+    <a href="{% url 'CreaPostre' %}">Agregar Postre</a>
+    <a href="{% url 'Postre_list' %}">Modificar Postre</a>
+    <hr>
+    
 {% endblock contenidoDinamico %}

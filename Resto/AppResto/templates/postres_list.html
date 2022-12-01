@@ -1,0 +1,35 @@
+{% extends 'padre.html' %}
+{% load static %}
+
+{% block contenidoDinamico %}
+
+<h1> Lista de Postres ( CLASS ) </h1>
+
+<ul>
+    
+    {% for postre in postres %}
+        <li> 
+            <a href="{% url 'DetallePostre' postre.id %}">
+                {{postre}}
+            </a>
+        </li>
+
+        <div>
+            
+            <button>
+                <a href="{% url 'ActualizaPostre' postre.id %}">Editar</a>
+            </button>
+
+            <button>
+                <a href="{% url 'EliminaPostre' postre.id  %}">Eliminar</a>
+            </button>
+
+        </div>
+
+    {% endfor %}
+        
+</ul>
+
+<a href="{% url 'Postres' %}">< -- Volver</a>
+
+{% endblock contenidoDinamico %} 
