@@ -3,7 +3,7 @@
 
 {% block contenidoDinamico %}
 <h4>Editar perfil de Usuario {{usuario}}:</h4>
-<hr>
+
 <form method="POST"> {% csrf_token %}
 
     <table>
@@ -13,7 +13,7 @@
     </table>
     <input type="submit" value="ACTUALIZAR">
 </form>
-<hr>
+
 
 
 {% endblock contenidoDinamico %} 

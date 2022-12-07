@@ -3,7 +3,7 @@
 
 {% block contenidoDinamico %}
 
-<h1> Lista de Postres ( CLASS ) </h1>
+<h1> Lista de Postres </h1>
 
 <ul>
     
@@ -15,21 +15,15 @@
         </li>
 
         <div>
+            <a href="{% url 'ActualizaPostre' postre.id %}" class="btn btn-primary" role="button">Editar</a>
+            <a href="{% url 'EliminaPostre' postre.id  %}" class="btn btn-danger" role="button">Eliminar</a>
             
-            <button>
-                <a href="{% url 'ActualizaPostre' postre.id %}">Editar</a>
-            </button>
-
-            <button>
-                <a href="{% url 'EliminaPostre' postre.id  %}">Eliminar</a>
-            </button>
-
         </div>
 
     {% endfor %}
         
 </ul>
 
-<a href="{% url 'Postres' %}">< -- Volver</a>
+<a href="{% url 'Postres' %}" class="btn btn-primary" role="button">< -- Volver</a>
 
 {% endblock contenidoDinamico %} 

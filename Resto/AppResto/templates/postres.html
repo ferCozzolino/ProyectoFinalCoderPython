@@ -7,10 +7,12 @@
     {% for postre in lista_postre %}
     <li>{{postre.postre}} - {{postre.precio}}</li>
     {% endfor %}
-    <hr>
+    <nav>
+        <a  href="{% url 'CreaPostre' %}"   class="btn btn-primary" role="button">Agregar Postre</a>
+        <a href="{% url 'Postre_list' %}" class="btn btn-primary" role="button">Modificar Postre</a>
+    </nav>
 
-    <a href="{% url 'CreaPostre' %}">Agregar Postre</a>
-    <a href="{% url 'Postre_list' %}">Modificar Postre</a>
-    <hr>
+
+
     
 {% endblock contenidoDinamico %}

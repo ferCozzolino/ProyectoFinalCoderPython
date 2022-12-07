@@ -3,16 +3,16 @@
 
 {% block contenidoDinamico %}
 <h4>Agregar Plato:</h4>
-<hr>
+
 <form action="{% url 'Crea_postre' %}" method="POST"> {% csrf_token %}
 
     {{ pepe.as_p }}
-    <input type="submit" value="Crear">
-    <hr>
+    <input class="btn btn-primary" type="submit" value="Agregar">
+  
 
 
 </form>
 
-<a href="{% url 'Postres' %}">< -- Volver</a>
+<a href="{% url 'Postres' %}" class="btn btn-primary" role="button">< -- Volver</a>
 
 {% endblock contenidoDinamico %} 

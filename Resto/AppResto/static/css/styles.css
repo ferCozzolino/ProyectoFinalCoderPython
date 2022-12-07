@@ -7816,6 +7816,8 @@ textarea.form-control-lg {
   background-color: rgba(var(--bs-secondary-rgb), var(--bs-bg-opacity)) !important;
 }
 
+
+
 .bg-success {
   --bs-bg-opacity: 1;
   background-color: rgba(var(--bs-success-rgb), var(--bs-bg-opacity)) !important;
@@ -11431,8 +11433,8 @@ html {
 }
 
 .masthead {
-  padding-top: calc(6rem + 74px);
-  padding-bottom: 6rem;
+  padding-top: calc(1rem + 74px);
+  padding-bottom: 1rem;
 }
 .masthead .masthead-heading {
   font-size: 2.75rem;
@@ -11447,8 +11449,8 @@ html {
 
 @media (min-width: 992px) {
   .masthead {
-    padding-top: calc(6rem + 104px);
-    padding-bottom: 6rem;
+    padding-top: calc(2rem + 104px);
+    padding-bottom:2rem;
   }
   .masthead .masthead-heading {
     font-size: 4rem;
@@ -11461,7 +11463,6 @@ html {
 .portfolio .portfolio-item {
   cursor: pointer;
   position: relative;
-  display: block;
   max-width: 25rem;
   border-radius: 0.5rem;
   overflow: hidden;

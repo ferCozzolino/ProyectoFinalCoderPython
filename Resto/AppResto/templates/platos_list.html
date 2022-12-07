@@ -15,21 +15,15 @@
         </li>
 
         <div>
-            
-            <button>
-                <a href="{% url 'ActualizaPlato' plato.id %}">Editar</a>
-            </button>
-
-            <button>
-                <a href="{% url 'EliminaPlato' plato.id  %}">Eliminar</a>
-            </button>
-
+            <a href="{% url 'ActualizaPlato' plato.id %}" class="btn btn-primary" role="button">Editar</a>
+            <a href="{% url 'EliminaPlato' plato.id  %}"class="btn btn-danger" role="button">Eliminar</a>
         </div>
 
     {% endfor %}
         
 </ul>
 
-<a href="{% url 'Platos' %}">< -- Volver</a>
+
+<a href="{% url 'Platos' %}" class="btn btn-primary" role="button">< -- Volver</a>
 
 {% endblock contenidoDinamico %} 

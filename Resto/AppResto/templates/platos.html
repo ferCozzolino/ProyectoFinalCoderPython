@@ -7,8 +7,10 @@
     {% for plato in lista_plato %}
     <li>{{plato.plato}} - {{plato.guarnicion}} -  ${{plato.precio}}</li>
     {% endfor %}
-    <a href="{% url 'CreaPlato' %}">Agregar Plato</a>
+    
+    <a href="{% url 'CreaPlato' %}" class="btn btn-primary" role="button">Agregar Plato</a>
+    <a href="{% url 'Plato_list' %}" class="btn btn-primary" role="button">Modificar Plato</a>
 
-<a href="{% url 'Plato_list' %}">Modificar Plato</a>
+
     
 {% endblock contenidoDinamico %}

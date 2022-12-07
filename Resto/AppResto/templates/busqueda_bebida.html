@@ -4,7 +4,6 @@
 {% block contenidoDinamico %}
 <h4>Buscar Bebida:</h4>
 
-<hr>
 <form action="{% url 'buscar_bebida' %}" method="GET"> {% csrf_token %}
 
    <label for="">Ingrese la bebida a buscar</label>
@@ -13,7 +12,7 @@
    <input type="submit" value="Buscar">
 
 </form>
-<hr>
+
 
 
 {% endblock contenidoDinamico %} 
